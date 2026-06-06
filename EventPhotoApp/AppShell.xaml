@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="EventPhotoApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.SegmentedControl;assembly=Syncfusion.Maui.Toolkit"
+    xmlns:pages="clr-namespace:EventPhotoApp.Pages"
+    Shell.FlyoutBehavior="Flyout"
+    Title="EventPhotoApp">
+
+    <ShellContent
+    Shell.NavBarIsVisible="True"
+    Title="Sign Up"
+    ContentTemplate="{DataTemplate pages:SignUpPageView}"
+    Route="SignUp" />
+
+    <ShellContent
+        Shell.NavBarIsVisible="True"
+        Title="Home Page"
+        ContentTemplate="{DataTemplate pages:HomePage}"
+        Route="HomePage" />
+
+    <ShellContent
+    Shell.NavBarIsVisible="True"
+    Title="Sign In"
+    ContentTemplate="{DataTemplate pages:SignInPageView}"
+    Route="SignIn" />
+    
+    <ShellContent
+    Shell.NavBarIsVisible="True"
+    Title="Photos Page"
+    ContentTemplate="{DataTemplate pages:PhotosPage}"
+    Route="PhotosPage" />
+
+    <ShellContent
+    Shell.NavBarIsVisible="True"
+    Title="Create Event"
+    ContentTemplate="{DataTemplate pages:CreateEventPage}"
+    Route="CreateEvent" />
+    <ShellContent
+    Shell.NavBarIsVisible="True"
+    Title="Join Event"
+    ContentTemplate="{DataTemplate pages:JoinEventPage}"
+    Route="JoinEvent" />
+
+
+
+
+  
+
+</Shell>

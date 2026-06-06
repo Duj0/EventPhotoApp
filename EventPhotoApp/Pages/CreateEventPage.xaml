@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EventPhotoApp.Pages.CreateEventPage"
+             Title="Create Event Page">
+    <ScrollView>
+        <StackLayout>
+
+            <Label Text="Create Event" 
+                   FontSize="20"
+                   HorizontalTextAlignment="Center"
+                   Padding="20"
+				  />
+            <Label Text="Event Name" 
+                   FontSize="20"
+	  />
+            <Entry x:Name="NameEntry"/>
+            <Label Text="Event date" 
+                   FontSize="20"
+	             />
+            <DatePicker x:Name="DateEntry"/>
+            <Label Text="Event hour" 
+                   FontSize="20"
+                  />
+            <TimePicker x:Name="TimeEntry"/>
+            <Button Text ="Submit Event"
+                     Clicked="OnSubmitEventClicked"/>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

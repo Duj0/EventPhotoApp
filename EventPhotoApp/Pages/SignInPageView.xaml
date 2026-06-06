@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EventPhotoApp.Pages.SignInPageView"
+    Title="Sign In">
+	<ScrollView>
+		<VerticalStackLayout>
+			<Entry Text="{Binding Email}"/>
+			<Entry Text="{Binding Password}" IsPassword="True"/>
+			<Button Command="{Binding SignInCommand}" Text="Sign In"/>
+			<Button Command="{Binding SignUpCommand}" Text="Dont have an account? Sign Up"/>
+		</VerticalStackLayout>
+	</ScrollView>
+</ContentPage>

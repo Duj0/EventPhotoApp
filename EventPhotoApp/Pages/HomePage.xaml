@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EventPhotoApp.Pages.HomePage"
+    Title="Home Page">
+    <ScrollView>
+        <StackLayout>
+            <Button Command="{Binding CreateEventCommand}" 
+                    Text="Create Event"/>
+                    
+            <Button Command="{Binding PhotosPageCommand}" 
+                    Text="Photos Page"/>
+                
+            <Button Text="Join Event" 
+                Command="{Binding JoinEventCommand}"/>
+                
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
