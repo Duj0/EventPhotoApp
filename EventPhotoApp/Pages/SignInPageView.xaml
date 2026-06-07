@@ -9,7 +9,7 @@
 			<Entry Text="{Binding Email}"/>
 			<Entry Text="{Binding Password}" IsPassword="True"/>
 			<Button Command="{Binding SignInCommand}" Text="Sign In"/>
-			<Button Command="{Binding SignUpCommand}" Text="Dont have an account? Sign Up"/>
+            <Button Command="{Binding NavigateSignUpCommand}" Text="Dont have an account? Sign Up"/>
 		</VerticalStackLayout>
 	</ScrollView>
 </ContentPage>

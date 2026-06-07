@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Firebase.Auth;
-//using Java.Net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +29,15 @@ namespace EventPhotoApp.Pages
         [RelayCommand]
         private async Task SignUp()
         {
-            await _authClient.CreateUserWithEmailAndPasswordAsync(Email, Password, Username);
-            await Shell.Current.GoToAsync("//HomePage");
+            try
+            {
+                await _authClient.CreateUserWithEmailAndPasswordAsync(Email, Password, Username);
+                await Shell.Current.GoToAsync("//HomePage");
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.ToString(), "Ok");
+            }
         }
 
         [RelayCommand]

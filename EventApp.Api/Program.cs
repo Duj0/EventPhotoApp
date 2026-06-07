@@ -127,6 +127,22 @@ app.MapGet("/photos/{eventId}", async(Guid eventId)=>
 
 });
 
+app.MapGet("/events/byId/{eventid}", async(Guid eventid)=>
+{
+    await using var connection = new Npgsql.NpgsqlConnection(connectionString);
+    var sql = """
+    SELECT id, name, "timeOfEvent", "dateOfEvent", code
+    FROM events
+    WHERE id = @eventid;
+    """;
+
+    var eventData = await connection.QueryFirstOrDefaultAsync(sql, new { eventid = eventid });
+    if (eventData == null)
+    {
+        return Results.NotFound("Event not found.");
+    }
+    return Results.Ok(eventData);
+});
 
 
 app.MapGet("/health", () => Results.Ok("OK"));

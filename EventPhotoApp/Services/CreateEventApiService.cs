@@ -25,7 +25,7 @@ namespace EventPhotoApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<string> CreateEventAsync(CreateEventDto request)
+        public async Task<EventResponse> CreateEventAsync(CreateEventDto request)
         {
             var response = await _httpClient.PostAsJsonAsync("/events", request);
             //System.Diagnostics.Debug.WriteLine("BASE: " + _httpClient.BaseAddress);
@@ -36,7 +36,7 @@ namespace EventPhotoApp.Services
                 throw new Exception($"Failed to create event: {msg}");
             }
             var  result = await response.Content.ReadFromJsonAsync<EventResponse>();
-            return result.Code;
+            return result;
         }
 
         public async Task<EventResponse> JoinEventAsync(string code) 

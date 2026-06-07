@@ -26,11 +26,11 @@
     ContentTemplate="{DataTemplate pages:SignInPageView}"
     Route="SignIn" />
     
-    <ShellContent
+    <!--<ShellContent
     Shell.NavBarIsVisible="True"
     Title="Photos Page"
     ContentTemplate="{DataTemplate pages:PhotosPage}"
-    Route="PhotosPage" />
+    Route="PhotosPage" />-->
 
     <ShellContent
     Shell.NavBarIsVisible="True"

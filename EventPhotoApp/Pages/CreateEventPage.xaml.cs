@@ -19,6 +19,7 @@ namespace EventPhotoApp.Pages
 
         private async void OnSubmitEventClicked(object sender, EventArgs e)
         {
+            
             var name = NameEntry.Text?.Trim();
             var date = DateEntry.Date.ToString("MM-dd-yyyy");
             var time = TimeEntry.Time.ToString(@"hh\:mm");
@@ -32,7 +33,7 @@ namespace EventPhotoApp.Pages
 
             try
             {
-                var code = await _api.CreateEventAsync(new Dtos.CreateEventDto
+                var response = await _api.CreateEventAsync(new Dtos.CreateEventDto
                 {
                     Name = name,
                     DateOfEvent = date,
@@ -50,9 +51,9 @@ namespace EventPhotoApp.Pages
                     }
                 };
                 await LocalNotificationCenter.Current.Show(notification);
-                await DisplayAlert("Success", $"Event Created! Join code: {code}", "Ok");
-
-                await Navigation.PopAsync();
+                await DisplayAlert("Success", $"Event Created! Join code: {response.Code}", "Ok");
+                Preferences.Set("eventId", response.Id.ToString());
+                await Shell.Current.GoToAsync($"PhotosPage?eventId={response.Id}");
 
             }
 

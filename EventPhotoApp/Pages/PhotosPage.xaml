@@ -6,6 +6,7 @@
     <ScrollView>
         <StackLayout>
             <Label Text="Photos Page"/>
+            <Label x:Name="CodeLabel" Text="Code:"/>
             <Button Text="Take a photo" Clicked="OnTakePhotoClicked"/>
             <CollectionView x:Name="PhotosCollection">
                 <CollectionView.ItemsLayout>

@@ -12,21 +12,22 @@
             _firebaseAuth = firebaseAuth;
             InitializeComponent();
             MainPage = appShell;
-            
-
-
-            
         }
-        protected override void OnStart()
+        protected override async void OnStart()
         {
-            System.Diagnostics.Debug.WriteLine(_firebaseAuth.User?.Uid ?? "null");
-            if (_firebaseAuth.User != null)
+            var email = Preferences.Get("userEmail", null);
+            var pass = Preferences.Get("userPassword", null);
+
+            System.Diagnostics.Debug.WriteLine($"Email from prefs: {email ?? "null"}");
+
+            if (email != null && pass != null)
             {
-                Shell.Current.GoToAsync("//HomePage");
+                await _firebaseAuth.SignInWithEmailAndPasswordAsync(email, pass);
+                await Shell.Current.GoToAsync("//HomePage");
             }
             else
             {
-            Shell.Current.GoToAsync("//SignIn");
+                await Shell.Current.GoToAsync("//SignIn");
             }
         }
     }

@@ -27,6 +27,8 @@ namespace EventPhotoApp.Pages
         private async Task SignIn() 
         {
             await _authClient.SignInWithEmailAndPasswordAsync(Email, Password);
+            Preferences.Set("userEmail", Email);
+            Preferences.Set("userPassword", Password);
             await Shell.Current.GoToAsync("//HomePage");
         }
 

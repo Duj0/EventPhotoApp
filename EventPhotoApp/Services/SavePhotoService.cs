@@ -16,40 +16,63 @@ namespace EventPhotoApp.Services
         public string PhotoUrl { get; set; }
         public string UploadedBy { get; set; }
     }
+
+    public class EventResponseBody
+    {
+        public string eventId { get; set; }
+        public string Code { get; set; }
+    }
     public class SavePhotoService
     {
-        
+
         public readonly HttpClient _httpClient;
 
-        public SavePhotoService(HttpClient httpClient) 
+        public SavePhotoService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
-            public async Task<string> SavePhoto(string eventId, string photoUrl, string uploadedBy)
+        public async Task<string> SavePhoto(string eventId, string photoUrl, string uploadedBy)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/photos", new { eventId, photoUrl, uploadedBy });
+            if (!response.IsSuccessStatusCode)
             {
-                var response = await _httpClient.PostAsJsonAsync("/photos", new { eventId, photoUrl, uploadedBy });
-                if (!response.IsSuccessStatusCode) 
-                {
-                    var msg = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Failed to create event: {msg}");
-                }
-
-                var result = await response.Content.ReadFromJsonAsync<PhotoResponse>();
-                return result.PhotoUrl;
+                var msg = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to create event: {msg}");
             }
 
-        public async Task<List<string>> GetPhotoAsync(string eventId) 
+            var result = await response.Content.ReadFromJsonAsync<PhotoResponse>();
+            return result.PhotoUrl;
+        }
+
+        public async Task<List<string>> GetPhotoAsync(string eventId)
         {
             var response = await _httpClient.GetAsync($"photos/{eventId}");
 
-            if (!response.IsSuccessStatusCode) 
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<string>();
+            }
+
+            if (!response.IsSuccessStatusCode)
             {
                 var msg = await response.Content.ReadAsStringAsync();
                 throw new Exception($"Failed to get photos: {msg}");
             }
+            
             var result = await response.Content.ReadFromJsonAsync<List<PhotoResponse>>();
             return result.Select(p => p.PhotoUrl).ToList();
+        }
+        public async Task<string> GetEventCodeAsync(string eventId)
+        {
+            var response = await _httpClient.GetAsync($"events/byId/{eventId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                var msg = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to get event code: {msg}");
+            }
+            var result = await response.Content.ReadFromJsonAsync<EventResponseBody>();
+            return result.Code;
         }
     }
 }

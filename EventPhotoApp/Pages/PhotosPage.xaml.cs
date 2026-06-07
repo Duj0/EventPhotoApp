@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace EventPhotoApp.Pages
 {
+
     [QueryProperty(nameof(EventId), "eventId")]
     public partial class PhotosPage : ContentPage
     {
@@ -12,6 +13,7 @@ namespace EventPhotoApp.Pages
         {
             get; set;
         }
+        
         private readonly PhotoUploadService _api;
         private readonly SavePhotoService _savePhotoService;
 
@@ -32,7 +34,7 @@ namespace EventPhotoApp.Pages
             try
             {
                 var url = await _api.UploadPhoto(photo);
-                await DisplayAlert("Uploaded", url, "OK");
+                await DisplayAlert("Uploaded","Photo was successfully uploaded", "OK");
                 var savePhoto = await _savePhotoService.SavePhoto(EventId, url, "Guest");
                 var photos = await _savePhotoService.GetPhotoAsync(EventId);
                 PhotosCollection.ItemsSource = photos;
@@ -45,15 +47,29 @@ namespace EventPhotoApp.Pages
         }
         protected override async void OnNavigatedTo(NavigatedToEventArgs args)
         {
-            EventId??= Preferences.Get("eventId", string.Empty);
-            base.OnNavigatedTo(args);
-            if (string.IsNullOrEmpty(EventId))
+            try
             {
-                await DisplayAlert("Error", "Event ID is missing. Join an event", "OK");
-                return;
+                base.OnNavigatedTo(args);
+                EventId ??= Preferences.Get("eventId", string.Empty);
+
+                if (string.IsNullOrEmpty(EventId))
+                {
+                    await DisplayAlert("Error", "Event ID is missing. Join an event", "OK");
+                    return;
+                }
+
+                var code = await _savePhotoService.GetEventCodeAsync(EventId);
+                CodeLabel.Text = $"Event Code: {code}";
+                var photos = await _savePhotoService.GetPhotoAsync(EventId);
+                PhotosCollection.ItemsSource = photos;
             }
-            var photos = await _savePhotoService.GetPhotoAsync(EventId);
-            PhotosCollection.ItemsSource = photos;
+            catch (Exception ex)
+            {
+
+                await DisplayAlert("Error", ex.ToString(), "Ok");
+            }
         }
+
+        
     }
 }
