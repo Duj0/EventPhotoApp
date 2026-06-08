@@ -10,16 +10,19 @@
                FontAttributes="Bold"
                TextColor="White"
                HorizontalTextAlignment="Center"/>
+        
         <Label x:Name="CodeLabel" 
                TextColor="#AAAAAA"
                FontSize="14"
                HorizontalTextAlignment="Center"/>
+        
         <Button Text="Take a Photo" 
                 Clicked="OnTakePhotoClicked"
                 BackgroundColor="#7C4DFF"
                 TextColor="White"
                 CornerRadius="10"
                 Margin="0,5"/>
+        
         <CollectionView x:Name="PhotosCollection">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="5" VerticalItemSpacing="5"/>
@@ -28,9 +31,14 @@
                 <DataTemplate>
                     <Image Source="{Binding .}" 
                            HeightRequest="150"
-                           Aspect="AspectFill"/>
+                           Aspect="AspectFill">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnPhotoTapped"/>
+                        </Image.GestureRecognizers>
+                    </Image>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        
     </StackLayout>
 </ContentPage>

@@ -3,13 +3,43 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="EventPhotoApp.Pages.SignInPageView"
+    BackgroundColor="#1A1A2E"
     Title="Sign In">
-	<ScrollView>
-		<VerticalStackLayout>
-			<Entry Text="{Binding Email}"/>
-			<Entry Text="{Binding Password}" IsPassword="True"/>
-			<Button Command="{Binding SignInCommand}" Text="Sign In"/>
-            <Button Command="{Binding NavigateSignUpCommand}" Text="Dont have an account? Sign Up"/>
-		</VerticalStackLayout>
-	</ScrollView>
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="15" VerticalOptions="Center">
+            <Label Text="Welcome Back" 
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   Padding="0,40,0,10"/>
+            <Label Text="Sign in to continue"
+                   FontSize="14"
+                   TextColor="#AAAAAA"
+                   HorizontalTextAlignment="Center"
+                   Padding="0,0,0,20"/>
+            <Entry Text="{Binding Email}"
+                   Placeholder="Email"
+                   PlaceholderColor="#AAAAAA"
+                   TextColor="White"
+                   BackgroundColor="#2A2A3E"
+                   Keyboard="Email"/>
+            <Entry Text="{Binding Password}"
+                   Placeholder="Password"
+                   PlaceholderColor="#AAAAAA"
+                   TextColor="White"
+                   BackgroundColor="#2A2A3E"
+                   IsPassword="True"/>
+            <Button Command="{Binding SignInCommand}" 
+                    Text="Sign In"
+                    BackgroundColor="#7C4DFF"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Margin="0,10,0,0"/>
+            <Button Command="{Binding NavigateSignUpCommand}" 
+                    Text="Don't have an account? Sign Up"
+                    BackgroundColor="Transparent"
+                    TextColor="#7C4DFF"/>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

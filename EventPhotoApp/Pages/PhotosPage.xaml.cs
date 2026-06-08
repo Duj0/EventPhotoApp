@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui.Storage;
+using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls;
 using System;
 using System.Threading.Tasks;
@@ -70,6 +71,30 @@ namespace EventPhotoApp.Pages
             }
         }
 
-        
+        private async void OnPhotoTapped(object sender, TappedEventArgs e)
+        {
+            try
+            {
+                var image = sender as Image;
+                var imageSource = image?.Source as UriImageSource;
+                var url = imageSource?.Uri?.ToString();
+                var httpClient = new HttpClient();
+                var bytes = await httpClient.GetByteArrayAsync(url);
+                var fileName = $"photo_{DateTime.Now:yyyyMMddHHmmss}.jpg";
+
+                using var stream = new MemoryStream(bytes);
+                var result = await FileSaver.Default.SaveAsync(fileName, stream);
+
+                if (result.IsSuccessful)
+                    await DisplayAlert("Saved", "Photo saved successfully!", "OK");
+            }
+            catch (Exception ex)
+            {
+
+                await DisplayAlert("Error", ex.ToString(), "Ok");
+            }
+        }
+
+
     }
 }
