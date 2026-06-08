@@ -2,24 +2,35 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EventPhotoApp.Pages.PhotosPage"
-			 Title="Photos Page">
-    <ScrollView>
-        <StackLayout>
-            <Label Text="Photos Page"/>
-            <Label x:Name="CodeLabel" Text="Code:"/>
-            <Button Text="Take a photo" Clicked="OnTakePhotoClicked"/>
-            <CollectionView x:Name="PhotosCollection">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="2"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding .}" 
-                   HeightRequest="150"
-                   Aspect="AspectFill"/>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
-    </ScrollView>
+             BackgroundColor="#1A1A2E"
+             Title="Gallery">
+    <StackLayout Padding="20" Spacing="10">
+        <Label Text="Gallery" 
+               FontSize="28" 
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalTextAlignment="Center"/>
+        <Label x:Name="CodeLabel" 
+               TextColor="#AAAAAA"
+               FontSize="14"
+               HorizontalTextAlignment="Center"/>
+        <Button Text="Take a Photo" 
+                Clicked="OnTakePhotoClicked"
+                BackgroundColor="#7C4DFF"
+                TextColor="White"
+                CornerRadius="10"
+                Margin="0,5"/>
+        <CollectionView x:Name="PhotosCollection">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="5" VerticalItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding .}" 
+                           HeightRequest="150"
+                           Aspect="AspectFill"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
 </ContentPage>

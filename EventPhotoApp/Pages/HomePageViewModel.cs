@@ -20,7 +20,7 @@ namespace EventPhotoApp.Pages
         [RelayCommand]
         private async Task PhotosPage()
         {
-            await Shell.Current.GoToAsync("//PhotosPage");
+            await Shell.Current.GoToAsync($"PhotosPage");
         }
 
         [RelayCommand]

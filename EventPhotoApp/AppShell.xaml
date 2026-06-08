@@ -6,46 +6,53 @@
     xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.SegmentedControl;assembly=Syncfusion.Maui.Toolkit"
     xmlns:pages="clr-namespace:EventPhotoApp.Pages"
     Shell.FlyoutBehavior="Flyout"
+    FlyoutBackgroundColor="#1A1A2E"
+    Shell.NavBarHasShadow="False"
+    Shell.BackgroundColor="#1A1A2E"
+    Shell.ForegroundColor="White"
+    Shell.TitleColor="White"
     Title="EventPhotoApp">
 
-    <ShellContent
-    Shell.NavBarIsVisible="True"
-    Title="Sign Up"
-    ContentTemplate="{DataTemplate pages:SignUpPageView}"
-    Route="SignUp" />
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" Class="FlyoutItemLabelStyle">
+                <Setter Property="TextColor" Value="White"/>
+            </Style>
+            <Style Class="FlyoutItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor" Value="#1A1A2E"/>
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
 
+
+    <ShellContent
+        Shell.NavBarIsVisible="True" 
+        Title="Sign Up"
+        ContentTemplate="{DataTemplate pages:SignUpPageView}"
+        Route="SignUp" />
+    
     <ShellContent
         Shell.NavBarIsVisible="True"
         Title="Home Page"
         ContentTemplate="{DataTemplate pages:HomePage}"
         Route="HomePage" />
-
-    <ShellContent
-    Shell.NavBarIsVisible="True"
-    Title="Sign In"
-    ContentTemplate="{DataTemplate pages:SignInPageView}"
-    Route="SignIn" />
     
-    <!--<ShellContent
-    Shell.NavBarIsVisible="True"
-    Title="Photos Page"
-    ContentTemplate="{DataTemplate pages:PhotosPage}"
-    Route="PhotosPage" />-->
-
     <ShellContent
-    Shell.NavBarIsVisible="True"
-    Title="Create Event"
-    ContentTemplate="{DataTemplate pages:CreateEventPage}"
-    Route="CreateEvent" />
+        Shell.NavBarIsVisible="True"
+        Title="Sign In"
+        ContentTemplate="{DataTemplate pages:SignInPageView}"
+        Route="SignIn" />
+    
     <ShellContent
-    Shell.NavBarIsVisible="True"
-    Title="Join Event"
-    ContentTemplate="{DataTemplate pages:JoinEventPage}"
-    Route="JoinEvent" />
-
-
-
-
-  
-
+        Shell.NavBarIsVisible="True"
+        Title="Create Event"
+        ContentTemplate="{DataTemplate pages:CreateEventPage}"
+        Route="CreateEvent" />
+    
+    <ShellContent
+        Shell.NavBarIsVisible="True"
+        Title="Join Event"
+        ContentTemplate="{DataTemplate pages:JoinEventPage}"
+        Route="JoinEvent" />
+    
 </Shell>

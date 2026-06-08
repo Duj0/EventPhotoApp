@@ -2,30 +2,42 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EventPhotoApp.Pages.CreateEventPage"
-             Title="Create Event Page">
+             BackgroundColor="#1A1A2E"
+             Title="Create Event">
     <ScrollView>
-        <StackLayout>
-
+        <StackLayout Padding="30" Spacing="15">
             <Label Text="Create Event" 
-                   FontSize="20"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="White"
                    HorizontalTextAlignment="Center"
-                   Padding="20"
-				  />
+                   Padding="0,20,0,10"/>
             <Label Text="Event Name" 
-                   FontSize="20"
-	  />
-            <Entry x:Name="NameEntry"/>
-            <Label Text="Event date" 
-                   FontSize="20"
-	             />
-            <DatePicker x:Name="DateEntry"/>
-            <Label Text="Event hour" 
-                   FontSize="20"
-                  />
-            <TimePicker x:Name="TimeEntry"/>
-            <Button Text ="Submit Event"
-                     Clicked="OnSubmitEventClicked"/>
+                   FontSize="14"
+                   TextColor="#AAAAAA"/>
+            <Entry x:Name="NameEntry"
+                   TextColor="White"
+                   PlaceholderColor="#AAAAAA"
+                   Placeholder="Enter event name"
+                   BackgroundColor="#2A2A3E"/>
+            <Label Text="Event Date" 
+                   FontSize="14"
+                   TextColor="#AAAAAA"/>
+            <DatePicker x:Name="DateEntry"
+                        TextColor="White"
+                        BackgroundColor="#2A2A3E"/>
+            <Label Text="Event Time" 
+                   FontSize="14"
+                   TextColor="#AAAAAA"/>
+            <TimePicker x:Name="TimeEntry"
+                        TextColor="White"
+                        BackgroundColor="#2A2A3E"/>
+            <Button Text="Create Event"
+                    Clicked="OnSubmitEventClicked"
+                    BackgroundColor="#7C4DFF"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Margin="0,20,0,0"/>
         </StackLayout>
     </ScrollView>
-
 </ContentPage>
