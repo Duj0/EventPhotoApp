@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EventPhotoApp.Pages
 {
-    public partial class SignInPageViewModel:ObservableObject
+    public partial class SignInPageViewModel : ObservableObject
     {
         public SignInPageViewModel(FirebaseAuthClient authClient)
         {
@@ -24,7 +24,7 @@ namespace EventPhotoApp.Pages
         private string _password;
 
         [RelayCommand]
-        private async Task SignIn() 
+        private async Task SignIn()
         {
             await _authClient.SignInWithEmailAndPasswordAsync(Email, Password);
             Preferences.Set("userEmail", Email);
@@ -33,9 +33,21 @@ namespace EventPhotoApp.Pages
         }
 
         [RelayCommand]
-        private async Task NavigateSignUp() 
+        private async Task NavigateSignUp()
         {
             await Shell.Current.GoToAsync("//SignUp");
+        }
+
+        [RelayCommand]
+        private async Task SignInWithGoogle()
+        {
+            // Implement Google Sign-In logic here
+        }
+
+        [RelayCommand]
+        private async Task ContinueAsGuest() 
+        {
+            await Shell.Current.GoToAsync("//PhotosPage");
         }
     }
 }

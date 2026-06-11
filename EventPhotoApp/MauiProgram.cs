@@ -48,7 +48,7 @@ namespace EventPhotoApp
             builder.Services.AddSingleton<ManageMetaPageModel>();
             builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
             {
-                ApiKey = "AIzaSyBs7V2aHIdsFmSZMDdvMXGnfSNa_95RJZc",
+                ApiKey = keys.FirebaseApiKey,
                 AuthDomain = "eventphotsharingapp.firebaseapp.com",
                 Providers = new FirebaseAuthProvider[]
                 {

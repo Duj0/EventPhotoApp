@@ -23,6 +23,13 @@
                 CornerRadius="10"
                 Margin="0,5"/>
         
+        <Button Text="Import from gallery" 
+                Clicked="OnPickPhotoClicked"
+                BackgroundColor="#7C4DFF"
+                TextColor="White"
+                CornerRadius="10"
+                Margin="0,5"/>
+
         <CollectionView x:Name="PhotosCollection">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="5" VerticalItemSpacing="5"/>

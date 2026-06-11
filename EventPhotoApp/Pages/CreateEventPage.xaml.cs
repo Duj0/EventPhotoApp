@@ -51,7 +51,8 @@ namespace EventPhotoApp.Pages
                     }
                 };
                 await LocalNotificationCenter.Current.Show(notification);
-                await DisplayAlert("Success", $"Event Created! Join code: {response.Code}", "Ok");
+                await DisplayAlert("Success", $"Event Created! Join code: {response.Code}\n The Code is copied to your clipboard", "Ok");
+                await Clipboard.Default.SetTextAsync($"Join my event with code: {response.Code}");
                 Preferences.Set("eventId", response.Id.ToString());
                 await Shell.Current.GoToAsync($"PhotosPage?eventId={response.Id}");
 

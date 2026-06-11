@@ -15,7 +15,7 @@ namespace EventPhotoApp.Services
 
         public PhotoUploadService()
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxdWZtbGtvYnF0eGVibnBnb2VyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTIyMjMxMCwiZXhwIjoyMDk0Nzk4MzEwfQ.flbt8XY-2j6bo1AUknnnjuPVDLJ3JlUhXF1A5mylBXQ");
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", keys.SupabaseKey);
         }
 
 
