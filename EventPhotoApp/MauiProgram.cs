@@ -66,6 +66,7 @@ namespace EventPhotoApp
             builder.Services.AddSingleton<SignUpPageView>();
             builder.Services.AddSingleton<SignUpPageViewModel>();
             builder.Services.AddTransientWithShellRoute<PhotosPage, PhotosPage>("PhotosPage");
+            builder.Services.AddTransientWithShellRoute<FullScreenImage, FullScreenImage>("FullScreenImage");
 
 
             builder.Services.AddTransientWithShellRoute<ProjectDetailPage, ProjectDetailPageModel>("project");

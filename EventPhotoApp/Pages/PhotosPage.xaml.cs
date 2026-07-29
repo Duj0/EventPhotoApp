@@ -110,33 +110,12 @@ namespace EventPhotoApp.Pages
 
         private async void OnPhotoTapped(object sender, TappedEventArgs e)
         {
-            try
-            {
-                var image = sender as Image;
-                var imageSource = image?.Source as UriImageSource;
-                var url = imageSource?.Uri?.ToString();
-                var httpClient = new HttpClient();
-                var bytes = await httpClient.GetByteArrayAsync(url);
-                var fileName = $"photo_{DateTime.Now:yyyyMMddHHmmss}.jpg";
+            var image = sender as Image;
+            var imageSource = image?.Source as UriImageSource;
+            var url = imageSource?.Uri?.ToString();
 
-#if ANDROID
-                var contentValues = new Android.Content.ContentValues();
-                contentValues.Put(Android.Provider.MediaStore.IMediaColumns.DisplayName, fileName);
-                contentValues.Put(Android.Provider.MediaStore.IMediaColumns.MimeType, "image/jpeg");
-                contentValues.Put(Android.Provider.MediaStore.IMediaColumns.RelativePath, Android.OS.Environment.DirectoryPictures + "/EventPhotos");
-                var uri = Android.App.Application.Context.ContentResolver.Insert(Android.Provider.MediaStore.Images.Media.ExternalContentUri, contentValues);
-
-                using var stream = Android.App.Application.Context.ContentResolver.OpenOutputStream(uri);
-                await stream.WriteAsync(bytes);
-#endif
-                await DisplayAlert("Saved", "Photo saved successfully!", "OK");
-
-            }
-            catch (Exception ex)
-            {
-
-                await DisplayAlert("Error", ex.ToString(), "Ok");
-            }
+            if (!string.IsNullOrEmpty(url))
+                await Shell.Current.GoToAsync($"FullScreenImage?photoUrl={url}");
         }
     }
 }
