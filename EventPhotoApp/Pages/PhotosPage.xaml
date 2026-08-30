@@ -29,6 +29,19 @@
                 TextColor="White"
                 CornerRadius="10"
                 Margin="0,5"/>
+        <Button Text="Leave the event" 
+                Clicked="OnLeaveEventClicked"
+                BackgroundColor="#7C4DFF"
+                TextColor="White"
+                CornerRadius="10"
+                Margin="0,5"/>
+
+        <Button Text="Download as ZIP" 
+                Clicked="OnDownloadAsZipClicked"
+                BackgroundColor="#7C4DFF"
+                TextColor="White"
+                CornerRadius="10"
+                Margin="0,5"/>
 
         <CollectionView x:Name="PhotosCollection">
             <CollectionView.ItemsLayout>

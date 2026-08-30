@@ -31,7 +31,7 @@ namespace EventPhotoApp.Pages
         {
             try
             {
-                await _authClient.CreateUserWithEmailAndPasswordAsync(Email, Password, Username);
+                var result = await _authClient.CreateUserWithEmailAndPasswordAsync(Email, Password, Username);
                 await Shell.Current.GoToAsync("//HomePage");
             }
             catch (Exception ex)

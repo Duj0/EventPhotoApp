@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls;
 using System;
+using System.IO.Compression;
 using System.Threading.Tasks;
 
 namespace EventPhotoApp.Pages
@@ -48,17 +49,28 @@ namespace EventPhotoApp.Pages
         }
         private async void OnPickPhotoClicked(object sender, EventArgs e)
         {
-            var photo = await MediaPicker.Default.PickPhotoAsync();
-            if (photo == null)
+            var photos = await FilePicker.Default.PickMultipleAsync(new PickOptions
+            {
+                FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    { DevicePlatform.Android, new[]{ "image/*", "video/*"} },
+                    { DevicePlatform.iOS, new[]{ "public.image", "public.movie"} }
+                }),
+                PickerTitle = "Select photos and videos"
+            });
+            if (photos == null)
             {
                 return;
             }
             try
             {
-                var url = await _api.UploadPhoto(photo);
+                foreach (var photo in photos) 
+                {
+                    var url = await _api.UploadPhoto(photo);
+                    var savePhoto = await _savePhotoService.SavePhoto(EventId, url, "Guest");
+                }
                 await DisplayAlert("Uploaded", "Photo was successfully uploaded", "OK");
-                var savePhoto = await _savePhotoService.SavePhoto(EventId, url, "Guest");
-                var photos = await _savePhotoService.GetPhotoAsync(EventId);
+                var upadatedPhotos = await _savePhotoService.GetPhotoAsync(EventId);
                 PhotosCollection.ItemsSource = photos;
             }
             catch (Exception ex)
@@ -116,6 +128,52 @@ namespace EventPhotoApp.Pages
 
             if (!string.IsNullOrEmpty(url))
                 await Shell.Current.GoToAsync($"FullScreenImage?photoUrl={url}");
+        }
+
+        private async void OnLeaveEventClicked(object sender, EventArgs e)
+        {
+            var result = await DisplayAlert("Leave the event", "Do you want to leave the event?", "Yes", "No");
+            if (result)
+            {
+                Preferences.Remove("eventId");
+                await Shell.Current.GoToAsync("//HomePage");
+            }
+        }
+
+        private async void OnDownloadAsZipClicked(object sender, EventArgs e)
+        {
+            var data = PhotosCollection.ItemsSource as List<string>;
+            if (data == null || data.Count == 0)
+            {
+                await DisplayAlert("Error","No photos to export yet", "OK");
+                return;
+            }
+            
+
+            using var memoryStream  = new MemoryStream();
+            using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+            {
+                var httpClient = new HttpClient();
+                int photosCount = 1;
+                foreach (var photoUrl in data)
+                {
+                    var bytes = await httpClient.GetByteArrayAsync(photoUrl);
+                    var entry = archive.CreateEntry($"photo_{photosCount}.jpg");
+                    using var entryStream = entry.Open();
+                    await entryStream.WriteAsync(bytes);
+                    photosCount++;
+                }
+            }
+            memoryStream.Position = 0;
+            var result = await FileSaver.Default.SaveAsync("EventPhotos.zip", memoryStream);
+            if (result != null)
+            {
+                await DisplayAlert("Success", "Photos exported as ZIP file!", "OK");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Failed to save ZIP file.", "OK");
+            }
         }
     }
 }

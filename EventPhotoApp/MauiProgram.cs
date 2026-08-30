@@ -3,8 +3,15 @@ using Firebase.Auth;
 using Firebase.Auth.Providers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
+using Plugin.Firebase.CloudMessaging;
 using Plugin.LocalNotification;
 using Syncfusion.Maui.Toolkit.Hosting;
+#if IOS
+using Plugin.Firebase.Core.Platforms.iOS;
+#elif ANDROID
+using Plugin.Firebase.Core.Platforms.Android;
+#endif
 
 namespace EventPhotoApp
 {
@@ -15,6 +22,7 @@ namespace EventPhotoApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .RegisterFirebaseServices()
                 .UseMauiCommunityToolkit()
                 .ConfigureSyncfusionToolkit()
                 .UseLocalNotification()
@@ -31,21 +39,11 @@ namespace EventPhotoApp
                     fonts.AddFont("SegoeUI-Semibold.ttf", "SegoeSemibold");
                     fonts.AddFont("FluentSystemIcons-Regular.ttf", FluentUI.FontFamily);
                 });
-
 #if DEBUG
-    		builder.Logging.AddDebug();
-    		builder.Services.AddLogging(configure => configure.AddDebug());
+            builder.Logging.AddDebug();
+            builder.Services.AddLogging(configure => configure.AddDebug());
 #endif
-
-            builder.Services.AddSingleton<ProjectRepository>();
-            builder.Services.AddSingleton<TaskRepository>();
-            builder.Services.AddSingleton<CategoryRepository>();
-            builder.Services.AddSingleton<TagRepository>();
-            builder.Services.AddSingleton<SeedDataService>();
             builder.Services.AddSingleton<ModalErrorHandler>();
-            builder.Services.AddSingleton<MainPageModel>();
-            builder.Services.AddSingleton<ProjectListPageModel>();
-            builder.Services.AddSingleton<ManageMetaPageModel>();
             builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
             {
                 ApiKey = keys.FirebaseApiKey,
@@ -54,7 +52,6 @@ namespace EventPhotoApp
                 {
                     new EmailProvider()
                 }
-
             }));
             builder.Services.AddSingleton<AppShell>();
             builder.Services.AddSingleton<HomePage>();
@@ -67,18 +64,25 @@ namespace EventPhotoApp
             builder.Services.AddSingleton<SignUpPageViewModel>();
             builder.Services.AddTransientWithShellRoute<PhotosPage, PhotosPage>("PhotosPage");
             builder.Services.AddTransientWithShellRoute<FullScreenImage, FullScreenImage>("FullScreenImage");
-
-
-            builder.Services.AddTransientWithShellRoute<ProjectDetailPage, ProjectDetailPageModel>("project");
-            builder.Services.AddTransientWithShellRoute<TaskDetailPage, TaskDetailPageModel>("task");
-
+            builder.Services.AddSingleton(x => CrossFirebaseCloudMessaging.Current);
             builder.Services.AddSingleton(sp =>
             new HttpClient { BaseAddress = new Uri("http://10.0.2.2:5189/") });
-            builder.Services.AddSingleton<CreateEventApiService>();    
+            builder.Services.AddSingleton<CreateEventApiService>();
             builder.Services.AddTransient<PhotoUploadService>();
             builder.Services.AddSingleton<SavePhotoService>();
-
+            builder.Services.AddSingleton<TokenService>();
             return builder.Build();
+        }
+
+        private static MauiAppBuilder RegisterFirebaseServices(this MauiAppBuilder builder)
+        {
+            builder.ConfigureLifecycleEvents(events =>
+            {
+#if ANDROID
+                events.AddAndroid(android => android.OnCreate((activity, _) => CrossFirebase.Initialize(activity, () => Platform.CurrentActivity)));
+#endif
+            });
+            return builder;
         }
     }
 }
