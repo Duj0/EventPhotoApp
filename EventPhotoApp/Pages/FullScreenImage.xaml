@@ -2,21 +2,35 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EventPhotoApp.Pages.FullScreenImage"
-             BackgroundColor="#1A1A2E"
-             Title="Create Event">
+             BackgroundColor="Black"
+             Title="Photo">
     <Grid>
         <Image x:Name="FullscreenImage"
                Aspect="AspectFit"
                VerticalOptions="Fill"
                HorizontalOptions="Fill"/>
-        <Button Text="Download"
+
+        <BoxView VerticalOptions="End"
+                 HeightRequest="120"
+                 InputTransparent="True">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="Transparent" Offset="0.0"/>
+                    <GradientStop Color="#CC000000" Offset="1.0"/>
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <Button Text="⬇  Save to Device"
                 Clicked="OnDownloadClicked"
+                FontAttributes="Bold"
                 BackgroundColor="#7C4DFF"
                 TextColor="White"
-                CornerRadius="10"
+                CornerRadius="26"
                 VerticalOptions="End"
                 HorizontalOptions="Center"
-                Margin="0,0,0,20"
-                WidthRequest="150"/>
+                Margin="0,0,0,28"
+                WidthRequest="200"
+                HeightRequest="52"/>
     </Grid>
 </ContentPage>

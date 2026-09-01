@@ -145,27 +145,30 @@ namespace EventPhotoApp.Pages
             var data = PhotosCollection.ItemsSource as List<string>;
             if (data == null || data.Count == 0)
             {
-                await DisplayAlert("Error","No photos to export yet", "OK");
+                await DisplayAlert("Error", "No photos to export yet", "OK");
                 return;
             }
-            
 
-            using var memoryStream  = new MemoryStream();
-            using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+            var filePath = Path.Combine(FileSystem.CacheDirectory, "EventPhotos.zip");
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            using (var archive = new ZipArchive(fileStream, ZipArchiveMode.Create, true))
             {
                 var httpClient = new HttpClient();
                 int photosCount = 1;
                 foreach (var photoUrl in data)
                 {
-                    var bytes = await httpClient.GetByteArrayAsync(photoUrl);
                     var entry = archive.CreateEntry($"photo_{photosCount}.jpg");
                     using var entryStream = entry.Open();
-                    await entryStream.WriteAsync(bytes);
+                    using var downloadStream = await httpClient.GetStreamAsync(photoUrl);
+                    await downloadStream.CopyToAsync(entryStream);
                     photosCount++;
                 }
             }
-            memoryStream.Position = 0;
-            var result = await FileSaver.Default.SaveAsync("EventPhotos.zip", memoryStream);
+
+            using var savedFileStream = File.OpenRead(filePath);
+            var result = await FileSaver.Default.SaveAsync("EventPhotos.zip", savedFileStream);
+
             if (result != null)
             {
                 await DisplayAlert("Success", "Photos exported as ZIP file!", "OK");
@@ -173,6 +176,22 @@ namespace EventPhotoApp.Pages
             else
             {
                 await DisplayAlert("Error", "Failed to save ZIP file.", "OK");
+            }
+
+            File.Delete(filePath);
+        }
+
+        private async void OnNotifyGuestsClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                await _savePhotoService.SendNotification(EventId, "Don't forget to download your photos before the event ends!");
+                await DisplayAlert("Sent", "Guests have been notified!", "OK");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.ToString(), "OK");
             }
         }
     }

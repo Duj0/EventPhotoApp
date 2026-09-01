@@ -39,15 +39,9 @@ namespace EventPhotoApp.Pages
         }
 
         [RelayCommand]
-        private async Task SignInWithGoogle()
-        {
-            // Implement Google Sign-In logic here
-        }
-
-        [RelayCommand]
         private async Task ContinueAsGuest() 
         {
-            await Shell.Current.GoToAsync("//PhotosPage");
+            await Shell.Current.GoToAsync("//JoinEvent");
         }
     }
 }

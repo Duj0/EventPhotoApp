@@ -74,5 +74,14 @@ namespace EventPhotoApp.Services
             var result = await response.Content.ReadFromJsonAsync<EventResponseBody>();
             return result.Code;
         }
+        public async Task SendNotification(string eventId, string message)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/notifications/send", new { eventId, message });
+            if (!response.IsSuccessStatusCode)
+            {
+                var msg = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to send notification: {msg}");
+            }
+        }
     }
 }

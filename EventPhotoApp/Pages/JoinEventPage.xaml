@@ -2,34 +2,50 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EventPhotoApp.Pages.JoinEventPage"
-             BackgroundColor="#1A1A2E"
+             BackgroundColor="#14141F"
              Title="Join Event">
     <ScrollView>
-        <StackLayout Padding="30" Spacing="15" VerticalOptions="Center">
-            <Label Text="Join Event" 
-                   FontSize="28"
+        <VerticalStackLayout Padding="32,0" Spacing="0" VerticalOptions="Center">
+
+
+            <Label Text="Join an Event" 
+                   FontSize="26"
                    FontAttributes="Bold"
                    TextColor="White"
-                   HorizontalTextAlignment="Center"
-                   Padding="0,20,0,10"/>
-            <Label Text="Enter the event code"
-                   FontSize="14"
-                   TextColor="#AAAAAA"
                    HorizontalTextAlignment="Center"/>
-            <Entry x:Name="CodeEntry"
-                   TextColor="White"
-                   PlaceholderColor="#AAAAAA"
-                   Placeholder="Enter 6-digit code"
-                   BackgroundColor="#2A2A3E"
+            <Label Text="Enter the code shared by the host"
+                   FontSize="14"
+                   TextColor="#8A8A9E"
                    HorizontalTextAlignment="Center"
-                   FontSize="24"
-                   Keyboard="Numeric"/>
+                   Margin="0,4,0,32"/>
+
+            <Label Text="EVENT CODE" FontSize="11" TextColor="#8A8A9E" Margin="4,0,0,6" HorizontalTextAlignment="Center"/>
+            <Border StrokeShape="RoundRectangle 12" 
+                    Stroke="#2E2E42" 
+                    StrokeThickness="1"
+                    BackgroundColor="#1E1E2E"
+                    Padding="16,2"
+                    Margin="0,0,0,28">
+                <Entry x:Name="CodeEntry"
+                       TextColor="White"
+                       PlaceholderColor="#5A5A70"
+                       Placeholder="000000"
+                       BackgroundColor="Transparent"
+                       HorizontalTextAlignment="Center"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       Keyboard="Numeric"
+                       HeightRequest="56"/>
+            </Border>
+
             <Button Text="Join Event"
                     Clicked="OnSubmitEventClicked"
+                    FontAttributes="Bold"
                     BackgroundColor="#7C4DFF"
                     TextColor="White"
-                    CornerRadius="10"
-                    Margin="0,20,0,0"/>
-        </StackLayout>
+                    CornerRadius="12"
+                    HeightRequest="52"/>
+
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

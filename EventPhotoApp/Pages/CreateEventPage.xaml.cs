@@ -55,7 +55,7 @@ namespace EventPhotoApp.Pages
                 };
                 await LocalNotificationCenter.Current.Show(notification);
                 await DisplayAlert("Success", $"Event Created! Join code: {response.Code}\n The Code is copied to your clipboard", "Ok");
-                await Clipboard.Default.SetTextAsync($"Join my event with code: {response.Code}");
+                await Clipboard.Default.SetTextAsync($"eventsnap://join?code={response.Code}"); ;
                 var token = await CrossFirebaseCloudMessaging.Current.GetTokenAsync();
                 await _tokenService.RegisterTokenAsync(token, response.Id.ToString(), "creator");
                 Preferences.Set("eventId", response.Id.ToString());
